@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>슬라이드 배너 실습</title>
+        <link rel="stylesheet" href="banner_task.css" />
+    </head>
+    <body>
+        <section class="container">
+            <div class="arrow left">&lt;</div>
+            <div class="banner">
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/cc976d09-bc1a-47d2-a3a9-7066ff2d060a.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/f8123520-7557-4feb-ab4b-7b067bc35c41.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/2a6a0165-0680-413e-af79-cf3137c1296f.png"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/ad317927-b91a-4f31-af7b-fe40290fbed1.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/2d7f852e-ebe5-4e6e-a054-b3f706581d3b.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/509fc214-bd7f-443f-a579-bffcd7188330.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/cf8ac77b-d94a-49d4-9e07-b5fcd86f60b8.jpg"
+                    />
+                </div>
+            </div>
+            <div class="arrow right">&gt;</div>
+            <div class="buttons">
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+            </div>
+        </section>
+    </body>
+    <script>
+        const firstBanner = document.createElement("div");
+        const lastBanner = document.createElement("div"); // 1번째 이미지 파일에 들어갈 div태그 생성
+        const banner = document.querySelector("div.banner"); // 전체 이미지 태그를 감싸주는 div태그 불러오기
+        const buttons = document.querySelectorAll("div.buttons button"); // 클래스명이 buttons인 div태그의 자식요소인 button태그들을 모두 가져온다.
+
+        let count = 0;
+        // temp란 곳에 일시적으로 button을 담아둔다.
+        let temp = buttons[0];
+        // 시작시 첫 슬라이드 화면이 나오므로 첫 button의 배경을 검은색으로 설정해준다.
+        temp.style.backgroundColor = "black";
+
+        lastBanner.innerHTML = `<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/cc976d09-bc1a-47d2-a3a9-7066ff2d060a.jpg">`;
+        banner.appendChild(lastBanner); // 마지막 div및 이미지를 banner의 자식요소로 삼기
+
+        firstBanner.innerHTML = `<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/cf8ac77b-d94a-49d4-9e07-b5fcd86f60b8.jpg">`;
+        // insertBefore는 firstBanner를 클래스명이 banner인 div 태그 이후 첫번째 div태그 이전에 붙이라는 방법
+        banner.insertBefore(
+            firstBanner,
+            document.querySelector("div.banner div")
+        );
+        // 처음 이미지가 1번슬라이드가 아니게 됐으므로 -1900px만큼 이동하고 시작하라는 의미
+        banner.style.transform = `translate(-1900px)`;
+
+        // 이제는 banner의 이동방식을 여러번 사용하게 되었으므로 화살표 함수에 이름을 붙여준다.
+        const autoSlide = () => {
+            count++; // count가 1씩 증가하게 하여 한칸씩 이미지의 크기만큼을 당겨온다. (즉 이미지 하나씩)
+            banner.style.transition = `transform 0.5s`; // 속성의 변화가 0.5s의 간격을 두고 변화하도록
+            banner.style.transform = `translate(${-1900 * (count + 1)}px)`; // 하나의 이미지만큼의 크기*이동해야하는 횟수 만큼 이동해라
+
+            if (count === 7) {
+                // count가 7, 즉 또 다른 첫번째 이미지가 왔을 때 원래의 첫번째 이미지로 돌아가게 하기 위해 조건문 사용
+                setTimeout(() => {
+                    // 다만 이전의 애니메이션 효과들이 0.5s의 간격을 두고 진행하는데 반해 count가 0인 첫번째 이미지로 되돌아가는데 걸리는 시간은 0초이므로
+                    // 이를 방지하기위해 setTimeout이란것으로 0.5s 후에 화살표함수가 실행되도록 설정한다.
+                    banner.style.transform = `translate(-1900px)`;
+                    banner.style.transition = `transform 0s`;
+                }, 500);
+                count = 0;
+            }
+            // autoSlide시에도 버튼이 검정색으로 변화해야하며
+            // 이전 버튼들은 하얀색으로 변화해야 하므로
+            temp.style.backgroundColor = "#fff";
+            // 기존 count들에 대한 button의 배경색을 검은색으로
+            buttons[count].style.background = "black";
+            // 이후 temp에는 다시 count번째의 버튼을 담아준다.
+            temp = buttons[count];
+        };
+
+        let id = setInterval(
+            // setInterval은 몇초의 간격을 두고 화살표함수를 실행할 건지에 대한 것
+            autoSlide,
+            2000
+        );
+        // intrinsic size : 외부 요인이 적용되지 않은 경우에, 콘텐츠를 기반으로 하는 크기입니다.
+
+        // 이전, 다음 버튼
+        const arrows = document.querySelectorAll("div.arrow"); //div태그의 arrow 불러오기
+
+        let arrowButtonCheck = true; //arrow 즉, 이전/다음 버튼이 한번은 실행이 되게끔 만들기
+        arrows.forEach((arrow) => {
+            // div태그의 버튼을 각각 불러와
+            // arrow의 클릭에 관한 이벤트 설정하여
+            arrow.addEventListener("click", (e) => {
+                if (arrowButtonCheck) {
+                    arrowButtonCheck = false; //연속으로 작동하지 않도록 설정
+                    clearInterval(id); // clearInterval을 사용함으로써 autoSlide를 잠시 중단한다.
+                    let arrowType = arrow.classList[1]; // 이전 다음 버튼의 클래스명 1번째를 불러와서
+                    // 이전 버튼이라면
+                    if (arrowType === "left") {
+                        // count를 1씩 감소시켜 이전 슬라이드로 이동하게 하고
+                        count--;
+                        banner.style.transition = `transform 0.5s`;
+                        banner.style.transform = `translate(${
+                            -1900 * (count + 1)
+                        }px)`;
+
+                        //만일 count가 -1, 즉 첫번째 7번 슬라이드라면
+                        if (count === -1) {
+                            // 0.5초의 간격을 두고 바로 마지막 7번 슬라이드로 이동하게 한다.
+                            setTimeout(() => {
+                                banner.style.transition = `transform 0s`;
+                                banner.style.transform = `translate(-13300px)`;
+                            }, 500);
+                            count = 6;
+                        }
+                        // 다음 버튼을 클릭했다면
+                    } else {
+                        count++;
+                        banner.style.transition = `transform 0.5s`;
+                        banner.style.transform = `translate(${
+                            -1900 * (count + 1)
+                        }px)`;
+                        // 마지막 1번 슬라이드라면
+                        if (count === 7) {
+                            setTimeout(() => {
+                                banner.style.transition = `transform 0s`;
+                                banner.style.transform = `translate(-1900px)`;
+                            }, 500);
+                            count = 0;
+                        }
+                    }
+                    // 이전, 다음 화살표 클릭시에도 버튼이 검정으로 변화해야하므로
+                    temp.style.backgroundColor = "#fff";
+                    buttons[count].style.background = "black";
+                    temp = buttons[count];
+                    // 다시 autoSlide가 작동되게 한다.
+                    id = setInterval(autoSlide, 2000);
+                    // 연속 클릭이 0.5s후에 해지되도록 setTimeout을 사용하여 arrowButtonCheck을 true로 다시 바꿔준다.
+                    setTimeout(() => {
+                        arrowButtonCheck = true;
+                    }, 500);
+                }
+            });
+        });
+
+        // 버튼
+        let buttonCheck = true;
+        // 각각의 버튼들을 가져오기 위해 forEach를 활용하고,
+        buttons.forEach((button, i) => {
+            // button에 대한 클릭시 해당슬라이드로 이동하기 위해
+            button.addEventListener("click", (e) => {
+                if (buttonCheck) {
+                    buttonCheck = false;
+                    clearInterval(id);
+
+                    count = i;
+                    temp.style.backgroundColor = "#fff";
+                    buttons[count].style.background = "black";
+
+                    banner.style.transition = "transform 0.5s";
+                    banner.style.transform = `translate(${
+                        -1900 * (count + 1)
+                    }px)`;
+                    temp = buttons[count];
+
+                    id = setInterval(autoSlide, 2000);
+
+                    setTimeout(() => {
+                        buttonCheck = true;
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</html>

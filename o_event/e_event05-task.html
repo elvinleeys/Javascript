@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>약관 동의</title>
+    </head>
+    <body>
+        <form action="" name="my-form">
+            <div>
+                <label>
+                    전체 동의
+                    <input type="checkbox" name="all" class="all" />
+                </label>
+            </div>
+            <div>
+                <label>
+                    서비스 이용약관 동의
+                    <input type="checkbox" name="term1" class="term" />
+                </label>
+            </div>
+            <div>
+                <label>
+                    광고 수신 동의
+                    <input type="checkbox" name="term2" class="term" />
+                </label>
+            </div>
+            <div>
+                <label>
+                    개인 정보 이용약관 동의
+                    <input type="checkbox" name="term3" class="term" />
+                </label>
+            </div>
+        </form>
+    </body>
+    <script>
+        // 전체 동의를 눌렀을 때, 모든 사항이 체크상태로 변한다.
+        // 전체 동의를 해제할 때, 모든 사항이 해제상태로 변한다.
+        const all = document.querySelector("input[name=all]");
+        const terms = document.querySelectorAll("input[class=term]");
+
+        all.addEventListener("change", (e) => {
+            terms.for;
+        });
+        // 모든 사항을 체크했을 때, 전체 동의가 체크상태로 변한다.
+        // 모든 사항 중 하나라도 해제상태일 때, 전체 동의가 해제상태로 변한다.
+    </script>
+</html>

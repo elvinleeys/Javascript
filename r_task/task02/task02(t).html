@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>종합 실습 02</title>
+    <style>
+        table {
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid gray;
+        }
+
+        table.post-detail-table, table.post-update-table {
+            display: none;
+        }
+
+        #go-list, #go-update, #update, #delete {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button>데이터 가져오기</button>
+    <button id="go-list">목록으로</button>
+    <button id="go-update">수정하기</button>
+    <button id="update">수정완료</button>
+    <button id="delete">삭제하기</button>
+    <div>
+        <form action="" name="post-form" style="text-align: center;">
+            <input type="hidden" name="userId" value="2">
+            <input type="text" name="title" placeholder="제목">
+            <textarea name="body" cols="20" rows="5"></textarea>
+            <button type="button" id="done">완료</button>
+        </form>
+    </div>
+    <table class="post-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+            </tr>
+        <thead>
+        <tbody></tbody>
+    </table>
+    <table class="post-detail-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>body</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    <table class="post-update-table">
+            <thead>
+                <tr>
+                    <th>userId</th>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>body</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+    </table>
+</body>
+<script src="service02(t).js"></script>
+<script src="layout02(t).js"></script>
+<script>
+    const button = document.querySelector("button");
+    const doneButton = document.getElementById("done");
+    const goListButton = document.getElementById("go-list");
+    const goUpdateButton = document.getElementById("go-update");
+    const updateButton = document.getElementById("update");
+    const deleteButton = document.getElementById("delete");
+    const postForm = document['post-form'];
+    const tbody = document.querySelector("table.post-table tbody");
+    const tablePost = document.querySelector("table.post-table");
+    const tablePostDetail = document.querySelector("table.post-detail-table");
+    const tablePostUpdate = document.querySelector("tbale.post-update-table");
+    
+
+    const doneButtonClickEvent = async (e) => {
+        const userId = postForm.userId.value;
+        const title = postForm.title.value;
+        const body = postForm.body.value;
+
+        const post = {
+            userId: userId,
+            title: title,
+            body: body
+        }
+
+        await postService.create(post);
+        await postService.findAll(postLayout.showList);
+    }
+
+    const updateClickEvent = async (e) => {
+        tablePostDetail.style.display = "none";
+        tablePostUpdate.style.display = "table";
+        const keys = ['userId', 'title', 'body']
+        const tds = document.querySelectorAll("td");
+        const post = {};
+
+        tds.forEach((td, i)=>{
+            switch(i) {
+                case 0 :
+                    post.userId = td.innerText
+            } 
+        });
+        postService.update(post)
+    }
+
+    const goUpdateButtonClickEvent = async (e) => {
+        const postId = e.target.classList[0];
+        tablePostDetail.style.display = "table";
+        tablePost.style.display = "none";
+        // 수정하기
+        e.target.style.display = "none";
+        // 수정완료
+        updateButton.style.display = "inline-block";
+        
+        tbody.innerHTML = await postService.read(postId, postLayout.updatePost);
+    }
+
+    const goListButtonClickEvent = (e) => {
+        e.target.style.display = "none";
+        tablePostDetail.style.display = "none";
+        tablePost.style.display = "table";
+        // 전체 목록 화면 출력
+        const text = postService.findAll(postLayout.showList);
+        
+    }
+
+    doneButton.addEventListener("click", doneButtonClickEvent);
+    goUpdateButton.addEventListener("click", goUpdateButtonClickEvent);
+    updateButton.addEventListener("click", updateClickEvent);
+
+    const buttonClickEvent = (e) => {
+        postService.findAll(postLayout.showList);
+    }
+
+    button.addEventListener("click", buttonClickEvent);
+    goListButton.addEventListener("click", goListButtonClickEvent);
+
+    tbody.addEventListener("click", (e) => {
+        e.preventDefault();
+        if(e.target.classList[0] === 'go-detail'){
+            const postId = e.target.getAttribute("href");
+            goUpdateButton.classList.add(postId);
+            // 목록으로 버튼 보이게 하기
+            goListButton.style.display = "inline-block";
+            // 수정하기 버튼 보이게 하기
+            goUpdateButton.style.display = "inline-block";
+            // 삭제하기 버튼 보이게 하기
+            deleteButton.style.display = "inline-block";
+    
+            tablePost.style.display = "none";
+            tablePostDetail.style.display = "table";
+            postService.read(postId, postLayout.showPost);
+        }
+    })
+</script>
+</html>

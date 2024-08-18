@@ -1,0 +1,51 @@
+section.container {
+    position: relative;
+    margin: 0 auto;
+    width: 1900px;
+    overflow: hidden;
+}
+
+div.banner {
+    /* 이미지들은 div태그, 즉 블록요소로 감싸져 있기에 flex를 통해 
+    가로로 배치되도록 */
+    display: flex;    
+    width: 17100px;
+}
+
+div.arrow {
+    font-weight: bold;
+    font-size: 2.3rem;
+    color: #0000004d;
+    line-height: 71.5px;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 4px solid #0000004d;
+    border-radius: 50%;
+    z-index: 1;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+div.left {
+    left: 20px;
+}
+
+div.right {
+    right: 20px;
+}
+
+div.buttons {
+    width: 1900px;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+}
+
+div.buttons button {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}

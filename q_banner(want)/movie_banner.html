@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Movie_banner</title>
+        <link rel="stylesheet" href="movie_banner.css" />
+    </head>
+    <body>
+        <section class="container">
+            <div class="banner">
+                <div>
+                    <img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/23/OpnH8Ij41oqrmeV7kZ9EBnDs2F9H9Oye_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/22/s7Ica1Ow0MEP0U7l57tOjO1DXexU2N9E_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/07/LVp8bCwlBWpI9BHacDmo6Vun9nm5n9PW_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/03/14/Thl1BUgFi5S8ERe74Vf2kkRrDutrLu6l_420.jpg"
+                    />
+                </div>
+                <div>
+                    <img 
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/26/kFf35GeLMd3Ni2fhigw9JZ8MMiu5tvF3_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/03/18/YlRiXGE3UAfnGuFiMj0D9CULBf7dZDE1_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/19/KdYopYfSwypsx6vJeG7V605K7PBxNu6D_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/03/08/2MQEG7CWIkZuekOIErgQU12isYQhKTbQ_420.jpg"
+                    />
+                </div>
+                <div>
+                    <img
+                        src="https://img.megabox.co.kr/SharedImg/2024/03/08/MNrbsauXbxNNJ8bJKxAwHfjcp0vcrkdJ_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/19/wzEOuKO6lJHmGqtwa1pnWYKewQ4kefqj_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/19/wzEOuKO6lJHmGqtwa1pnWYKewQ4kefqj_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/01/03/MQNvJyuH0RrzlhmgIOiB5RO1QwfKXZXO_420.jpg"
+                    />
+                </div>
+            </div>
+        </section>
+    </body>
+    <script>
+        const lastBanner = document.createElement("div"); 
+        const banner = document.querySelector("div.banner"); 
+        let count = 0;
+
+        lastBanner.innerHTML = `<img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/23/OpnH8Ij41oqrmeV7kZ9EBnDs2F9H9Oye_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/22/s7Ica1Ow0MEP0U7l57tOjO1DXexU2N9E_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/02/07/LVp8bCwlBWpI9BHacDmo6Vun9nm5n9PW_420.jpg"
+                    /><img
+                        src="https://img.megabox.co.kr/SharedImg/2024/03/14/Thl1BUgFi5S8ERe74Vf2kkRrDutrLu6l_420.jpg"
+                    />`;
+        banner.appendChild(lastBanner);
+
+        setInterval(() => {
+            count++; 
+            banner.style.transition = `transform 0.5s`;
+            banner.style.transform = `translate(${-1176 * count}px)`;
+
+            if (count === 4) {
+                setTimeout(() => {
+                    banner.style.transform = `translate(0px)`;
+                    banner.style.transition = `transform 0s`;
+                }, 500);
+                count = 0;
+            }
+        }, 2000);
+    </script>
+    </script>
+</html>

@@ -1,0 +1,10 @@
+section.container {
+    margin: 0 auto;
+    width: 1176px;
+    overflow: hidden;
+}
+
+div.banner {
+    display: flex;    
+    width: 4704px;
+}
